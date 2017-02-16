@@ -10,7 +10,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.io.File;
 import java.util.Scanner;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -123,18 +122,25 @@ public class Myinvertedindexd extends Configured implements Tool {
     	 HashMap<String, Integer> files = new HashMap<String, Integer>();
          for (Text val : values) {
         	 String strval = val.toString();
+        	 int countval = 1;
+        	 
+        	 if (strval.contains("#")){
+        		 countval = Integer.parseInt(strval.substring(strval.indexOf("#")+1, strval.length()));
+        		 strval = strval.substring(0, strval.indexOf("#"));
+        	 }
         	 if (!files.containsKey(strval)){
-        		 files.put(strval, 1);
+        		 files.put(strval, countval);
         	 }
         	 else {
-        		 files.put(strval, files.get(strval) + 1);
+        		 files.put(strval, files.get(strval) + countval);
         	 }
          }
          
     	 StringBuilder filesoutput = new StringBuilder();         
          for (String file : files.keySet()) {
         	 if (file.length() != 0) {
-        		 filesoutput.append(file + "$" + files.get(file) + ", ");
+        		 Integer count = files.get(file);
+        		 filesoutput.append(file + "#" + count + ", ");
         	 }
          }
          if (filesoutput.length()>1) {
