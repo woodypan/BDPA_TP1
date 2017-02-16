@@ -53,7 +53,7 @@ public class Myinvertedindexc extends Configured implements Tool {
       job.setOutputValueClass(Text.class);
 
       job.setMapperClass(Map.class);
-      job.setCombinerClass(Reduce.class);
+      //job.setCombinerClass(Reduce.class); //using a combiner makes the counter count unique words at both the combining and reducing steps!
       job.setReducerClass(Reduce.class);
 
       job.setInputFormatClass(TextInputFormat.class);
